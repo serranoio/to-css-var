@@ -1,7 +1,7 @@
 use std::{fs, io::{self, Read}};
 
-fn read_file(file_name: &str) -> Vec<String> {
-    String::from_utf8(fs::read(file_name).unwrap()).unwrap()
+fn read_file(contents: &str) -> Vec<String> {
+    contents 
     .split("\n")
     .map(|line| {
         line.to_string()
@@ -20,8 +20,9 @@ fn write_contents(contents: Vec<String>) {
     println!("{}", contents.join("\n"));
 }
 fn main() {
-    let args = std::env::args().collect::<Vec<String>>();
+    let mut buffer = String::new();
+    io::stdin().read_to_string(&mut buffer).unwrap();
 
-    let contents = read_file(args[1].trim());
+    let contents = read_file(buffer.as_str());
     write_contents(contents);
 }
